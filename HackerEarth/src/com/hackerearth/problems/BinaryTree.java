@@ -1,5 +1,7 @@
 package com.hackerearth.problems;
 
+import java.util.Scanner;
+
 class binaryTreeNode<T>{
 	T data;
 
@@ -58,7 +60,7 @@ public class BinaryTree<T> {
 			return 0;
 		return (totalRecursive(root.getLeft())+totalRecursive(root.getRight()))+1;
 	}
-	
+
 	//count leaf and non leaf in binary tree
 	public int[] CLN(binaryTreeNode<T> root){
 		if(root==null){
@@ -78,16 +80,15 @@ public class BinaryTree<T> {
 			}
 		}
 	}
-	
+
 	//calculate full node
 	public int FFN(binaryTreeNode<T> root){
 		if(root==null)
 			return 0;
 		else
 			return FFN(root.left)+FFN(root.right) + ((root.left!=null && root.right!=null)?1:0);
-		
 	}
-	
+
 	//takes O(n) time
 	public binaryTreeNode<T> insert(T data,String path){
 		if(root==null){
@@ -109,19 +110,65 @@ public class BinaryTree<T> {
 		return temp;
 	}
 
+	public void inorder(binaryTreeNode<T> root){
+		if(root==null)
+			return;
+		
+		inorder(root.left);
+		System.out.print(root.getData());
+		inorder(root.right);
+	}
+	//hight of the tree
+	public int hight(binaryTreeNode<T> root){
+		if(root==null)
+			return 0;
+		if(root.getLeft()==null && root.getRight()==null)
+			return 0;
+		return Math.max(hight(root.getLeft()), hight(root.getRight()))+1;
+	}
+	//calculate diameter of the tree in linear time O(n)
+	public int[] hight_diameter(binaryTreeNode<T> root){
+		int h_d[]=new int[2];
+		if(root==null || isLeaf(root) ){
+			h_d[0]=0;
+			h_d[1]=0;
+			return h_d;
+		}
+		int left_h_d[]=hight_diameter(root.left);
+		int right_h_d[]=hight_diameter(root.right);
+		
+		h_d[0]=Math.max(left_h_d[0], right_h_d[0])+1;
+		
+		if(!isFullnode(root)){
+			h_d[1]=root.getLeft()==null?right_h_d[1]:left_h_d[1];
+		}else{
+			h_d[1]=Math.max(left_h_d[1], Math.max(right_h_d[1], (left_h_d[0]+right_h_d[0]+3)));
+		}
+		return h_d;
+	}
+	public boolean isLeaf(binaryTreeNode<T> root){
+		return (root.getLeft()==null && root.getRight()==null) ? true:false;
+	}
+	
+	public boolean isFullnode(binaryTreeNode<T> root){
+		return (root.getLeft()!=null && root.getRight()!=null) ? true:false;
+	}
+
 	public static void main(String args[]){
-		BinaryTree<Character> mytree=new BinaryTree<Character>('A');
-		mytree.insert('B', "L");
-		mytree.insert('C', "R");
-		mytree.insert('E', "LL");
-		mytree.insert('D', "RL");
-		mytree.insert('L', "RR");
-		mytree.insert('M', "LR");
-		mytree.insert('K', "RRR");
-		mytree.insert('N', "RRL");
-		int cln[]=mytree.CLN(mytree.root);
-		System.out.println("Leaf : "+cln[0]);
-		System.out.println("non leaf : "+cln[1]);
-		System.out.println("Full node : "+mytree.FFN(mytree.root));
+		BinaryTree<Integer> mytree=new BinaryTree<Integer>(null);
+		Scanner sc=new Scanner(System.in);
+		String feedinput=sc.nextLine();
+		int n=Integer.parseInt(feedinput.split(" ")[0]);
+		mytree.getRoot().setData(Integer.parseInt(feedinput.split(" ")[1]));
+		 
+		//feed tree
+		
+		for(int i=0;i<n-1;i++){
+			feedinput=sc.nextLine();
+			mytree.insert(Integer.parseInt(sc.nextLine()), feedinput);
+		}
+		sc.close();
+		
+		System.out.println(mytree.hight_diameter(mytree.root)[1]);
 	}
 }
