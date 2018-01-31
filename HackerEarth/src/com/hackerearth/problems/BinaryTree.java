@@ -2,6 +2,29 @@ package com.hackerearth.problems;
 
 import java.util.Scanner;
 
+
+class Helper{
+	boolean flag;
+	StringBuilder path;
+	
+	public Helper(){
+		this.flag=false;
+		this.path=new StringBuilder("");
+	}
+	public StringBuilder getPath() {
+		return path;
+	}
+	public void setPath(StringBuilder path) {
+		this.path = path;
+	}
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+	
+}
 class binaryTreeNode<T>{
 	T data;
 
@@ -118,6 +141,50 @@ public class BinaryTree<T> {
 		System.out.print(root.getData());
 		inorder(root.right);
 	}
+	
+	public binaryTreeNode<T> find(binaryTreeNode<T> root,T value){
+		binaryTreeNode<T> parent=null;
+		
+		if(root==null)
+			return parent;
+
+		if(root.getData().equals(value)){
+			parent=root;
+		}
+		if(parent==null)
+		parent=find(root.left,value);
+		
+		if(parent==null)
+		parent=find(root.right,value);
+		
+		return parent;
+	}
+	
+	public Helper searchPath(binaryTreeNode<T> root,T value,Helper help){
+	
+		if(root==null)
+			return help;
+		
+		if(root.getData().equals(value)){
+			help.setFlag(true);
+		}
+		
+		if(!help.isFlag()){
+		help.setPath(help.getPath().append("L"));
+		help=searchPath(root.left,value,help);
+		if(!help.isFlag())
+			help.setPath(help.getPath().deleteCharAt(help.getPath().length()-1));
+		}
+		
+		
+		if(!help.isFlag()){
+		help.setPath(help.getPath().append("R"));
+		help=searchPath(root.right,value,help);
+		if(!help.isFlag())
+			help.setPath(help.getPath().deleteCharAt(help.getPath().length()-1));
+		}
+		return help;
+	}
 	//hight of the tree
 	public int hight(binaryTreeNode<T> root){
 		if(root==null)
@@ -152,6 +219,30 @@ public class BinaryTree<T> {
 	
 	public boolean isFullnode(binaryTreeNode<T> root){
 		return (root.getLeft()!=null && root.getRight()!=null) ? true:false;
+	}
+	
+	public T findMirror(StringBuilder path,T defaultChar){
+		
+		binaryTreeNode<T> temp=this.getRoot();
+		if(root==null)
+			return defaultChar;
+		
+		for(int i=0;i<path.length();i++){
+			if(path.charAt(i)=='L')
+				temp=temp.getRight();
+			else
+				temp=temp.getLeft();
+			
+
+			if(temp==null)
+				return defaultChar;	
+		}
+		
+
+		if(temp==null)
+			return defaultChar;	
+		
+		return temp.getData();
 	}
 
 	public static void main(String args[]){
