@@ -1,5 +1,8 @@
 package com.hackerearth.problems;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -95,7 +98,7 @@ public class Comrades_II {
 		h+=parentSoFar*childeren.size();
 	  // System.out.println("new h"+h);
 		for(int i=0;i<childeren.size();i++){
-			if(childeren.get(i)!=null){
+			if(childeren.get(i).getChildren()!=null){
 				h=handshake(narryTree, parentSoFar+1, h, childeren.get(i).getChildren());
 			}
 		}
@@ -106,14 +109,18 @@ public class Comrades_II {
 	}
 	
 	public static void main(String args[]){
-		Scanner sc=new Scanner(System.in);
-		int t=sc.nextInt();
+		try{
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("/home/prashank/Documents/Project/HackerEarthSolutions/HackerEarth/src/com/hackerearth/problems/input.txt")));
+   
+		int t=Integer.parseInt(br.readLine());
 		
 		while(t-- > 0){
 			LCRS_Tree<Long> narryTree=new LCRS_Tree<Long>();
-			int n=sc.nextInt();
+			int n=Integer.parseInt(br.readLine());
+			String superviserArray[]=br.readLine().split(" ");
+//			System.out.println(superviserArray);
 			for(int i=1;i<=n;i++){
-				long immedidate=sc.nextLong();
+				long immedidate=Long.parseLong(superviserArray[i-1]);
 				//System.out.println("Imediate :"+immedidate+"********");
 				LCRS_Node<Long> node=narryTree.find((long)i)==null?new LCRS_Node<Long>((long)i):narryTree.find((long)i);
 				narryTree.save(node.getValue(), node);
@@ -136,13 +143,16 @@ public class Comrades_II {
 					}
 				}
 			}
+//			System.out.println("Insert DOne");
 			long handshake=Comrades_II.handshake(narryTree, 1L,0L, narryTree.getRoot().getChildren());
 			//System.out.println("handshake : "+handshake);
 			Comrades_II.printHandShakeWristPair(n, handshake);
 			narryTree=null;
 		}
-		sc.close();
+		br.close();
+	}catch(Exception e){
+		e.printStackTrace();
 	}
-	
 
+}
 }

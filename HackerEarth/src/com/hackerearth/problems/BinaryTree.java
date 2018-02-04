@@ -1,5 +1,7 @@
 package com.hackerearth.problems;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -64,6 +66,7 @@ class binaryTreeNode<T>{
 
 public class BinaryTree<T> {
 	public binaryTreeNode<T> root;
+	private Map<T,binaryTreeNode<T>> cache=new HashMap<T,binaryTreeNode<T>>();
 
 
 	public binaryTreeNode<T> getRoot() {
@@ -140,6 +143,14 @@ public class BinaryTree<T> {
 		inorder(root.left);
 		System.out.print(root.getData());
 		inorder(root.right);
+	}
+	public StringBuffer preorder(binaryTreeNode<T> root,T stopdata,StringBuffer buffer){
+		if(root==null || root.getData()==stopdata)
+			return buffer;
+		buffer.append(root.getData()+" ");
+		buffer=preorder(root.left,stopdata,buffer);
+		buffer=preorder(root.right,stopdata,buffer);
+		return buffer;
 	}
 	
 	public binaryTreeNode<T> find(binaryTreeNode<T> root,T value){
@@ -221,6 +232,12 @@ public class BinaryTree<T> {
 		return (root.getLeft()!=null && root.getRight()!=null) ? true:false;
 	}
 	
+	public void save(T key,binaryTreeNode<T> node){
+		this.cache.put(key, node);
+	}
+	public binaryTreeNode<T> get(T key){
+		return this.cache.get(key);
+	}
 	public T findMirror(StringBuilder path,T defaultChar){
 		
 		binaryTreeNode<T> temp=this.getRoot();
