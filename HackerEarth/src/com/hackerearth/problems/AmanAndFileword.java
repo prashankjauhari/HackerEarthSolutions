@@ -25,6 +25,14 @@ class Order {
 }
 public class AmanAndFileword {
 	
+	/*public static void main(String args[]){
+		System.out.print("[");
+		for(int i=1;i<=115;i++){
+			System.out.print(i+",");
+		}
+		System.out.println("]");
+		
+	}*/
 	
 	
 	public static void main(String args[]){
