@@ -106,6 +106,28 @@ public class Graph<T> {
 		}while(!q.isEmpty());
 		return visitedSequence.toString();
 	}
+	/**
+	 * source vertex is the vertex from where search is started.
+	 * visited is the map to maintain the state of vertex(visited or not).
+	 * which is initilized with false except for source vertex.
+	 * 
+	 * In case some vertex is added into the adjacency list but 
+	 * not present in the vertex list then this method will
+	 * throw RuntimeException stating that 'Vertex not present in vertex set'
+	 * 
+	 * Time complexity is O(V+E)
+	 * space complexity is O(V)
+	 * 
+	 * Note as i am using adjacency list representation of graph that's why
+	 * its time complexity is O(V+E) but if you use adjacency matrix rep-
+	 * presentation then its time complexity will be O(V+E^2)
+	 * 
+	 * @param data
+	 * @param visited
+	 * @param visitedSequence
+	 * @return
+	 * @throws RuntimeException
+	 */
 	
 	public StringBuffer DFS(T data,Map<T,Boolean> visited,StringBuffer visitedSequence) throws RuntimeException{
 		Vertex v=this.getVertexes().get(data);
