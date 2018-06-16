@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * This is source file contains graph data structure
+ * This source file contains graph data structure
  * which can be used for both directed and undirected
  * graph.It contains useful algorithm which can be
  * used to solve graph based problem.

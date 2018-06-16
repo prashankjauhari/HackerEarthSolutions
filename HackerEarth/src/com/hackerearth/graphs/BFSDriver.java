@@ -12,7 +12,7 @@ import java.util.Set;
  * @author Prashank Jauhari
  */
 
-public class BFS {
+public class BFSDriver {
 	
 	public static void main(String args[]){
 		
