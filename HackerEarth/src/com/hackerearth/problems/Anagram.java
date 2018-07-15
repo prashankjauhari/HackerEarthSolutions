@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import com.threads.programme.AccessTest;
 
-public class Anagram {
+public class Anagram extends AccessTest{
 	public static void main(String args[]){
-
 		Scanner sc=new Scanner(System.in);
 		int testcases=Integer.parseInt(sc.nextLine());
-
 		while(testcases-- > 0){
 			/*
 			 * System.out.println("testcase :"+testcases);
@@ -46,6 +45,8 @@ public class Anagram {
 			}
 			System.out.println(diff);
 		}
+		
+			
 		sc.close();
 	}
 
